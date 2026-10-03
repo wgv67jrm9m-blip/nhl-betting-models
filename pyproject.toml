@@ -13,6 +13,7 @@ dependencies = [
 	"numpy>=2.0,<3",
 	"polars>=1.8,<2",
 	"pydantic>=2.9,<3",
+    "pytz>=2024.1",
 	"scipy>=1.14,<2",
 ]
 
