@@ -1,0 +1,26 @@
+[
+  {
+    "source_game_id": "game-a",
+    "source_team_id": "team-a",
+    "source_goalie_id": "goalie-a",
+    "confirmation_status": "confirmed",
+    "source_name": "synthetic-goalies",
+    "source_record_id": "goalie-status-1",
+    "raw_payload_record_id": "raw-goalie-1",
+    "source_timestamp": "2026-01-10T14:00:00-05:00",
+    "retrieval_timestamp": "2026-01-10T14:05:00-05:00",
+    "as_of_timestamp": "2026-01-10T14:00:00-05:00"
+  },
+  {
+    "source_game_id": "game-b",
+    "source_team_id": "team-c",
+    "source_goalie_id": "goalie-b",
+    "confirmation_status": "projected",
+    "source_name": "synthetic-goalies",
+    "source_record_id": "goalie-status-2",
+    "raw_payload_record_id": "raw-goalie-2",
+    "source_timestamp": "2026-01-11T13:00:00-05:00",
+    "retrieval_timestamp": "2026-01-11T13:05:00-05:00",
+    "as_of_timestamp": "2026-01-11T13:00:00-05:00"
+  }
+]

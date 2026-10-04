@@ -1,0 +1,4 @@
+source_team_id,opponent_position,game_state,sog_allowed_per_60,exposure_minutes,source_name,source_record_id,raw_payload_record_id,source_timestamp,retrieval_timestamp,as_of_timestamp
+team-b,forward,5v5,8.4,720.0,synthetic-profiles,profile-1,raw-profile-1,2026-01-09T20:00:00-05:00,2026-01-09T20:05:00-05:00,2026-01-09T20:00:00-05:00
+team-b,forward,power_play,11.2,90.0,synthetic-profiles,profile-2,raw-profile-2,2026-01-09T20:00:00-05:00,2026-01-09T20:05:00-05:00,2026-01-09T20:00:00-05:00
+team-d,defenseman,5v5,5.7,680.0,synthetic-profiles,profile-3,raw-profile-3,2026-01-10T20:00:00-05:00,2026-01-10T20:05:00-05:00,2026-01-10T20:00:00-05:00

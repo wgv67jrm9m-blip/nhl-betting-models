@@ -1,0 +1,44 @@
+[
+  {
+    "source_player_id": "player-a",
+    "source_team_id": "team-a",
+    "source_game_id": "game-a",
+    "availability_status": "available",
+    "confirmation_status": "confirmed",
+    "source_name": "synthetic-availability",
+    "source_record_id": "availability-1",
+    "raw_payload_record_id": "raw-availability-1",
+    "source_timestamp": "2026-01-10T11:00:00-05:00",
+    "retrieval_timestamp": "2026-01-10T11:05:00-05:00",
+    "as_of_timestamp": "2026-01-10T11:00:00-05:00",
+    "provider_label": "active"
+  },
+  {
+    "source_player_id": "player-b",
+    "source_team_id": "team-c",
+    "source_game_id": "game-b",
+    "availability_status": "injured",
+    "confirmation_status": "projected",
+    "source_name": "synthetic-availability",
+    "source_record_id": "availability-2",
+    "raw_payload_record_id": "raw-availability-2",
+    "source_timestamp": "2026-01-11T11:00:00-05:00",
+    "retrieval_timestamp": "2026-01-11T11:05:00-05:00",
+    "as_of_timestamp": "2026-01-11T11:00:00-05:00",
+    "provider_label": "questionable"
+  },
+  {
+    "source_player_id": "player-c",
+    "source_team_id": "team-d",
+    "source_game_id": "game-b",
+    "availability_status": "scratched",
+    "confirmation_status": "confirmed",
+    "source_name": "synthetic-availability",
+    "source_record_id": "availability-3",
+    "raw_payload_record_id": "raw-availability-3",
+    "source_timestamp": "2026-01-11T15:00:00-05:00",
+    "retrieval_timestamp": "2026-01-11T15:05:00-05:00",
+    "as_of_timestamp": "2026-01-11T15:00:00-05:00",
+    "provider_label": "scratched"
+  }
+]
