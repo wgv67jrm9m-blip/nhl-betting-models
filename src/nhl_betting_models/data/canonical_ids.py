@@ -39,12 +39,14 @@ class CanonicalIdMapping(BaseModel):
     def validate_identifiers(self) -> CanonicalIdMapping:
         """Reject blank mapping identifiers."""
 
-        if not self.source_name.strip():
-            raise ValueError("source_name must not be empty")
-        if not self.source_entity_id.strip():
-            raise ValueError("source_entity_id must not be empty")
-        if not self.canonical_id.strip():
-            raise ValueError("canonical_id must not be empty")
+        if (
+            not self.source_name.strip()
+            or not self.source_entity_id.strip()
+            or not self.canonical_id.strip()
+        ):
+            raise ValueError(
+                "identity mapping identifiers must not be empty"
+            )
         return self
 
 
