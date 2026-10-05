@@ -38,7 +38,8 @@ class DataQualityFlag(StrEnum):
     MISMATCHED_GAME_START_TIME = "mismatched_game_start_time"
     DUPLICATE_OFFER = "duplicate_offer"
     MISMATCHED_PLAYER_IDENTITY = "mismatched_player_identity"
-
+    MISSING_SLATE_GAME = "missing_slate_game"
+    MISSING_SLATE_PLAYER = "missing_slate_player"
 
 class DataQualityIssue(BaseModel):
     """One immutable structured data-quality finding."""
