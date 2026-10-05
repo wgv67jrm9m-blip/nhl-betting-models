@@ -8,12 +8,64 @@ from nhl_betting_models.data.slate import (
     SOGSlatePaths,
     assemble_sog_slate,
 )
-from tests.test_file_adapters import synthetic_identity_map
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
+def synthetic_identity_map():
+    """Return the test identity map used by the sportsbook fixture."""
+
+    from nhl_betting_models.data.canonical_ids import (
+        CanonicalEntityType,
+        CanonicalIdMap,
+        CanonicalIdMapping,
+    )
+
+    mappings = [
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-odds",
+            source_entity_id="game-a",
+            canonical_id="canonical-game-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-odds",
+            source_entity_id="game-b",
+            canonical_id="canonical-game-b",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-odds",
+            source_entity_id="player-a",
+            canonical_id="canonical-player-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-odds",
+            source_entity_id="player-b",
+            canonical_id="canonical-player-b",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.SPORTSBOOK,
+            source_name="synthetic-odds",
+            source_entity_id="book-a",
+            canonical_id="canonical-book-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.SPORTSBOOK,
+            source_name="synthetic-odds",
+            source_entity_id="book-b",
+            canonical_id="canonical-book-b",
+        ),
+    ]
+
+    return CanonicalIdMap(mappings)
+
+
 def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
+    """Assemble every input type into one normalized synthetic slate."""
+
     paths = SOGSlatePaths(
         schedule=FIXTURES / "synthetic_schedule.json",
         player_game_stats=FIXTURES / "synthetic_player_game_logs.csv",
