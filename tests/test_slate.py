@@ -4,22 +4,22 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from nhl_betting_models.data.canonical_ids import (
+    CanonicalEntityType,
+    CanonicalIdMap,
+    CanonicalIdMapping,
+)
 from nhl_betting_models.data.slate import (
     SOGSlatePaths,
     assemble_sog_slate,
+    assemble_validated_sog_slate,
 )
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
-def synthetic_identity_map():
-    """Return the test identity map used by the sportsbook fixture."""
-
-    from nhl_betting_models.data.canonical_ids import (
-        CanonicalEntityType,
-        CanonicalIdMap,
-        CanonicalIdMapping,
-    )
+def synthetic_identity_map() -> CanonicalIdMap:
+    """Return canonical IDs required by the synthetic odds fixture."""
 
     mappings = [
         CanonicalIdMapping(
@@ -63,10 +63,10 @@ def synthetic_identity_map():
     return CanonicalIdMap(mappings)
 
 
-def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
-    """Assemble every input type into one normalized synthetic slate."""
+def synthetic_slate_paths() -> SOGSlatePaths:
+    """Return local fixture paths for one synthetic NHL SOG slate."""
 
-    paths = SOGSlatePaths(
+    return SOGSlatePaths(
         schedule=FIXTURES / "synthetic_schedule.json",
         player_game_stats=FIXTURES / "synthetic_player_game_logs.csv",
         role_projections=FIXTURES / "synthetic_role_projections.csv",
@@ -80,7 +80,14 @@ def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
         ),
     )
 
-    slate = assemble_sog_slate(paths, synthetic_identity_map())
+
+def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
+    """Load every synthetic input type into one normalized slate."""
+
+    slate = assemble_sog_slate(
+        synthetic_slate_paths(),
+        synthetic_identity_map(),
+    )
 
     assert len(slate.games) == 3
     assert len(slate.player_game_stats) == 3
@@ -94,3 +101,17 @@ def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
     assert first_offer.canonical_event_id == "canonical-game-a"
     assert first_offer.canonical_subject_id == "canonical-player-a"
     assert first_offer.sportsbook == "canonical-book-a"
+
+
+def test_assemble_validated_sog_slate_returns_quality_result() -> None:
+    """Return a usable slate together with cross-record validation."""
+
+    result = assemble_validated_sog_slate(
+        synthetic_slate_paths(),
+        synthetic_identity_map(),
+    )
+
+    assert result.is_valid
+    assert result.quality.is_valid
+    assert len(result.slate.games) == 3
+    assert len(result.slate.sportsbook_offers) == 9

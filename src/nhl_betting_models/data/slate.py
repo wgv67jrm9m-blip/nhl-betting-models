@@ -24,6 +24,7 @@ from nhl_betting_models.data.file_adapters import (
     JsonSportsbookOfferFileAdapter,
     JsonStartingGoalieFileAdapter,
 )
+from nhl_betting_models.data.quality import DataQualityResult
 
 
 @dataclass(frozen=True)
@@ -37,6 +38,20 @@ class SOGSlate:
     availability: tuple[NormalizedAvailability, ...]
     opponent_sog_profiles: tuple[NormalizedOpponentSOGProfile, ...]
     sportsbook_offers: tuple[Offer, ...]
+
+
+@dataclass(frozen=True)
+class SOGSlateAssemblyResult:
+    """One assembled slate with its cross-record quality findings."""
+
+    slate: SOGSlate
+    quality: DataQualityResult
+
+    @property
+    def is_valid(self) -> bool:
+        """Return whether the assembled slate has no validation errors."""
+
+        return self.quality.is_valid
 
 
 @dataclass(frozen=True)
@@ -79,4 +94,22 @@ def assemble_sog_slate(
             paths.sportsbook_offers,
             identity_map,
         ).offers(),
+    )
+
+
+def assemble_validated_sog_slate(
+    paths: SOGSlatePaths,
+    identity_map: CanonicalIdMap,
+) -> SOGSlateAssemblyResult:
+    """Assemble an NHL SOG slate and return its quality findings."""
+
+    from nhl_betting_models.data.slate_validation import (
+        validate_sog_slate_links,
+    )
+
+    slate = assemble_sog_slate(paths, identity_map)
+
+    return SOGSlateAssemblyResult(
+        slate=slate,
+        quality=validate_sog_slate_links(slate),
     )
