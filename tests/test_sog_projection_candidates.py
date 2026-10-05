@@ -11,7 +11,6 @@ from nhl_betting_models.data.quality import (
     DataQualitySeverity,
 )
 from nhl_betting_models.data.slate import (
-    SOGSlateAssemblyResult,
     assemble_validated_sog_slate,
 )
 from nhl_betting_models.nhl.sog_projection_candidates import (
