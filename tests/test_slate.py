@@ -19,7 +19,7 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def synthetic_identity_map() -> CanonicalIdMap:
-    """Return canonical IDs required by the synthetic odds fixture."""
+    """Return canonical IDs required by synthetic NHL input fixtures."""
 
     mappings = [
         CanonicalIdMapping(
@@ -58,6 +58,54 @@ def synthetic_identity_map() -> CanonicalIdMap:
             source_entity_id="book-b",
             canonical_id="canonical-book-b",
         ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-schedule",
+            source_entity_id="game-a",
+            canonical_id="canonical-game-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-schedule",
+            source_entity_id="game-b",
+            canonical_id="canonical-game-b",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-roles",
+            source_entity_id="game-a",
+            canonical_id="canonical-game-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.GAME,
+            source_name="synthetic-roles",
+            source_entity_id="game-b",
+            canonical_id="canonical-game-b",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-stats",
+            source_entity_id="player-a",
+            canonical_id="canonical-player-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-stats",
+            source_entity_id="player-b",
+            canonical_id="canonical-player-b",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-roles",
+            source_entity_id="player-a",
+            canonical_id="canonical-player-a",
+        ),
+        CanonicalIdMapping(
+            entity_type=CanonicalEntityType.PLAYER,
+            source_name="synthetic-roles",
+            source_entity_id="player-b",
+            canonical_id="canonical-player-b",
+        ),
     ]
 
     return CanonicalIdMap(mappings)
@@ -79,6 +127,38 @@ def synthetic_slate_paths() -> SOGSlatePaths:
             FIXTURES / "synthetic_sportsbook_sog_offers.json"
         ),
     )
+
+
+def test_synthetic_identity_map_resolves_projection_source_ids() -> None:
+    """Resolve schedule, role, and stats IDs used by projection inputs."""
+
+    identity_map = synthetic_identity_map()
+
+    schedule_game = identity_map.resolve(
+        entity_type=CanonicalEntityType.GAME,
+        source_name="synthetic-schedule",
+        source_entity_id="game-a",
+    )
+    role_game = identity_map.resolve(
+        entity_type=CanonicalEntityType.GAME,
+        source_name="synthetic-roles",
+        source_entity_id="game-a",
+    )
+    stats_player = identity_map.resolve(
+        entity_type=CanonicalEntityType.PLAYER,
+        source_name="synthetic-stats",
+        source_entity_id="player-a",
+    )
+    role_player = identity_map.resolve(
+        entity_type=CanonicalEntityType.PLAYER,
+        source_name="synthetic-roles",
+        source_entity_id="player-a",
+    )
+
+    assert schedule_game.canonical_id == "canonical-game-a"
+    assert role_game.canonical_id == "canonical-game-a"
+    assert stats_player.canonical_id == "canonical-player-a"
+    assert role_player.canonical_id == "canonical-player-a"
 
 
 def test_assemble_sog_slate_loads_all_synthetic_inputs() -> None:
